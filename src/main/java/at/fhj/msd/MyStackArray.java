@@ -1,27 +1,51 @@
 package at.fhj.msd;
 
-import java.nio.channels.Pipe.SourceChannel;
-
+/**
+ * A generic stack implementation using an array.
+ *
+ * @param <E> the type of elements held in this stack
+ */
 public class MyStackArray<E> {
   private E[] stack;
   int n;
   int top;
   int size;
 
-  public MyStackArray(int size) { // Wir übergeben eine Größe
-    n = size; // Die größe wird in n gespeichert
-    stack = (E[]) new Object[n + 1]; // es wird ein neues array mit der größe größe +1 erstellt
-    top = 0; // Das Array ist leer zu beginn
+  /**
+   * Constructs a new stack with the given maximum size.
+   *
+   * @param size the maximum number of elements the stack can hold
+   */
+  public MyStackArray(int size) {
+    n = size;
+    stack = (E[]) new Object[n + 1];
+    top = 0;
   }
 
+  /**
+   * Checks if the stack is empty.
+   *
+   * @return {@code true} if the stack is empty, {@code false} otherwise
+   */
   public boolean isEmpty() {
     return top == 0;
   }
 
+  /**
+   * Returns the current number of elements in the stack.
+   *
+   * @return the size of the stack
+   */
   public int size() {
     return size;
   }
 
+  /**
+   * Pushes an element onto the stack.
+   *
+   * @param x the element to be pushed
+   * @throws RuntimeException if the stack is full (overflow)
+   */
   public void push(E x) {
     if (top == stack.length) {
       throw new RuntimeException("Overflow");
@@ -31,25 +55,18 @@ public class MyStackArray<E> {
     size++;
   }
 
+  /**
+   * Pops the top element from the stack.
+   *
+   * @return the element removed from the top of the stack
+   * @throws RuntimeException if the stack is empty (underflow)
+   */
   public E pop() {
     if (top == 0) {
       throw new RuntimeException("Underflow");
     }
     top = top - 1;
-    E item = stack[top];
-    stack[top] = null; 
-    return item;
-
-//     public E pop() {
-//     if (top == 0) {
-//         throw new RuntimeException("Underflow");
-//     }
-//     top = top - 1;
-//     size--;
-//     return stack[top];
-// }
-
-
+    size--;
+    return stack[top];
   }
-
 }
